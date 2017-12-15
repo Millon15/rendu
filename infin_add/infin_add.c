@@ -6,7 +6,7 @@
 /*   By: vbrazas <vbrazas@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 18:18:39 by vbrazas           #+#    #+#             */
-/*   Updated: 2017/12/15 22:06:38 by vbrazas          ###   ########.fr       */
+/*   Updated: 2017/12/15 22:36:04 by vbrazas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	infin_diff(char *buf, char *av1, char *av2, int k[])
 	int		rem;
 	int		len;
 
-	len = malloc_len(d1, d2, k);
+	len = malloc_len(av1, av2, k);
 	buf = (char *)malloc(sizeof(char) * len);
 	buf[len--] = '\0';
 	rem = 0;
