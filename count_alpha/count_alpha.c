@@ -6,7 +6,7 @@
 /*   By: vbrazas <vbrazas@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 04:40:19 by vbrazas           #+#    #+#             */
-/*   Updated: 2017/12/15 05:16:41 by vbrazas          ###   ########.fr       */
+/*   Updated: 2017/12/15 17:47:07 by vbrazas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ void	to_lower(char *buf)
 int		main(int ac, char **av)
 {
 	int		i;
-	int		b[26];
-	char	m[26];
+	int		b[27];
+	char	m[27];
 
 	if (ac != 2)
 		return (write(1, "\n", 1));
 	to_lower(av[1]);
 	i = 0;
-	while (i < 26)
+	while (i < 27)
 	{
 		m[i] = 0;
 		b[i++] = 0;
