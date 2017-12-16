@@ -6,7 +6,7 @@
 /*   By: vbrazas <vbrazas@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 18:18:39 by vbrazas           #+#    #+#             */
-/*   Updated: 2017/12/16 18:35:10 by vbrazas          ###   ########.fr       */
+/*   Updated: 2017/12/16 23:06:10 by vbrazas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,52 +17,73 @@
 
 void	printarr(char *buf)
 {
+	char	*bf;
+
+	bf = buf;
+	if (*buf == '-')
+		write(1, &(*buf++), 1);
+	while (*buf == '0')
+		buf++;
+	if (!(*buf))
+		write(1, "0", 1);
+	while (*buf)
+		write(1, &(*buf++), 1);
+	write(1, "\n", 1);
+	free(bf);
+}
+
+void	help_diff(char **av1, char **av2, int k[])
+{
+	char	*b;
 	int		i;
 
-	i = 0;
-	while (buf[i])
-		write(1, &buf[i++], 1);
-	write(1, "\n", 1);
+	if ((*av1)[0] == '-' && (k[2] - 1) >= k[3])
+	{
+		b = *av1;
+		*av1 = *av2;
+		*av2 = b;
+		i = k[2];
+		k[2] = k[3];
+		k[3] = i;
+		i = k[0];
+		k[0] = k[1];
+		k[1] = i;
+	}
+	k[4] = 0;
 }
 
 void	infin_diff(char *buf, char *av1, char *av2, int k[])
 {
 	int		rem;
 	int		len;
-	int		len_buf;
 
-	k[4] = 0;
-	len = k[2] > k[3] ? k[2] : k[3] + 1;
-	len_buf = len;
+	help_diff(&av1, &av2, k);
+	len = (k[2] > k[3] ? k[2] : k[3]) + 3;
 	buf = (char *)malloc(sizeof(char) * len);
 	buf[len--] = '\0';
 	rem = 0;
 	printf("len is %d\n", len);
-	printf("buf content is : ");
-	while (rem <= len)
-	{
-		buf[rem++] = 'f';
-		printf("%c", buf[rem - 1]);
-	}
-	rem = 0;
-	printf("\nk is : ");
+	printf("k is : ");
 	while (rem < 5)
 		printf("%d ", k[rem++]);
 	printf("\n\n");
 	rem = 0;
-	while (len >= 0)
+	while (len >= 1)
 	{
 		if ((buf[len--] =
-				(k[2] >= k[0] ? av1[k[2]--] : 0) -
-				(k[3] >= k[1] ? av2[k[3]--] : 0) -
+				(k[2] >= k[0] ? av1[k[2]--] : '0') -
+				(k[3] >= k[1] ? av2[k[3]--] : '0') -
 				(rem == 0 ? rem : rem--) + '0') < '0')
 		{
 			rem = 1;
 			buf[len + 1] += 10;
 		}
 	}
-	if (k[4])
+	printf("k[4] & rem is : %d|%d\n", k[4], rem);
+	if ((k[4] || rem) && !(k[4] && rem))
 		buf[len] = '-';
+	else
+		buf[len] = '0';
 	printarr(buf);
 }
 
@@ -71,7 +92,7 @@ void	infin_add(char *buf, char *av1, char *av2, int k[])
 	int		rem;
 	int		len;
 
-	len = (k[2] > k[3] ? k[2] : k[3]) + 1;
+	len = (k[2] > k[3] ? k[2] : k[3]) + 2;
 	buf = (char *)malloc(sizeof(char) * len);
 	buf[len--] = '\0';
 	rem = 0;
