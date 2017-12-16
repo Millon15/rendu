@@ -6,7 +6,7 @@
 /*   By: vbrazas <vbrazas@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 18:18:39 by vbrazas           #+#    #+#             */
-/*   Updated: 2017/12/15 22:36:04 by vbrazas          ###   ########.fr       */
+/*   Updated: 2017/12/16 18:35:10 by vbrazas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,32 @@ void	printarr(char *buf)
 	write(1, "\n", 1);
 }
 
-int		malloc_len(char *d1, char *d2, int k[])
-{
-	int		i;
-
-	i = 12;
-	k[4] = 0;
-	return (i);
-}
-
 void	infin_diff(char *buf, char *av1, char *av2, int k[])
 {
 	int		rem;
 	int		len;
+	int		len_buf;
 
-	len = malloc_len(av1, av2, k);
+	k[4] = 0;
+	len = k[2] > k[3] ? k[2] : k[3] + 1;
+	len_buf = len;
 	buf = (char *)malloc(sizeof(char) * len);
 	buf[len--] = '\0';
 	rem = 0;
-	while (len >= k[4])
+	printf("len is %d\n", len);
+	printf("buf content is : ");
+	while (rem <= len)
+	{
+		buf[rem++] = 'f';
+		printf("%c", buf[rem - 1]);
+	}
+	rem = 0;
+	printf("\nk is : ");
+	while (rem < 5)
+		printf("%d ", k[rem++]);
+	printf("\n\n");
+	rem = 0;
+	while (len >= 0)
 	{
 		if ((buf[len--] =
 				(k[2] >= k[0] ? av1[k[2]--] : 0) -
@@ -51,7 +58,7 @@ void	infin_diff(char *buf, char *av1, char *av2, int k[])
 				(rem == 0 ? rem : rem--) + '0') < '0')
 		{
 			rem = 1;
-			buf[len + 1] = buf[len + 1] + '9' + 1;
+			buf[len + 1] += 10;
 		}
 	}
 	if (k[4])
@@ -76,7 +83,7 @@ void	infin_add(char *buf, char *av1, char *av2, int k[])
 				(rem == 0 ? rem : rem--) - '0') > '9')
 		{
 			rem = 1;
-			buf[len + 1] = buf[len + 1] - '9' - 1;
+			buf[len + 1] -= 10;
 		}
 	}
 	if (k[4])
