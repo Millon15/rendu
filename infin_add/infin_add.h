@@ -16,4 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 
+int		printarr(char *buf);
+int		infin_diff(char *buf, char *av1, char *av2, int k[]);
+
 #endif
