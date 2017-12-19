@@ -21,6 +21,44 @@ int		printarr(char *buf, int k2)
 	return (write(1, "\n", 1));
 }
 
+int		ft_strlen(char *buf)
+{
+	int		i;
+
+	i = 0;
+	while (buf[i])
+		i++;
+	return (i);
+}
+
+void	infin_add(char *buf, char *av1, char *av2, int k[])
+{
+	int		len;
+	int		rem;
+	int		i;
+	int		j;
+
+	i = ft_strlen(buf);
+	len = i-- + 2;
+	buf = (char *)malloc(sizeof(char) * len);
+	buf[len--] = 0;
+	j = ft_strlen(av2);
+	rem = 0;
+	while (len >= 0)
+	{
+		fn = ((i >= 0 ? av1[i--] : '0') + (j >= 0 ? av2[j--] : '0') +
+		(rem ? rem-- : 0) + '0');
+		if (fn > '9')
+		{
+			rem = (fn - '0') / 10;
+			buf[len] = (fn - '0') % 10 + '0';
+		}
+		else if ((buf[len] = fn) <= '9')
+			rem = 0;
+		len--;
+	}
+	return (buf);
+}
 char	*mult_by_one_digit(char *buf, char *av1, char *av2, int k[])
 {
 	int		len;
