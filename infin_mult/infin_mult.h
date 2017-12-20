@@ -16,4 +16,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 
+char	*adding(char *buf, char *av1, char *av2, int k[]);
+
 #endif

@@ -29,17 +29,38 @@ int		printarr(char *buf, int k2)
 	return (write(1, "\n", 1));
 }
 
-void	help_for_mbod(char **buf, int *len, int k[])
+int		ft_strlen(char *buf)
 {
-	int		nulls;
+	int		i;
 
-	nulls = k[5]++;
-	*len = k[0] - k[3] + nulls + 3;
-	*buf = (char *)malloc(sizeof(char) * (*len));
-	(*buf)[(*len)--] = '\0';
-	(*buf)[(*len)--] = '\0';
-	while (nulls--)
-		(*buf)[(*len)--] = '0';
+	i = 0;
+	while (buf[i])
+		i++;
+	return (i);
+}
+
+char	*infin_add(char *buf, char *av1, char *av2, int k[])
+{
+	int		len;
+	int		rem;
+	int		i;
+	int		j;
+
+	i = ft_strlen(av1);
+	len = i-- + 3;
+	buf = (char *)malloc(sizeof(char) * len);
+	buf[len--] = '\0';
+	buf[len--] = '\0';
+	j = ft_strlen(av2) - 1;
+	rem = 0;
+	while (len >= 0)
+		if ((buf[len--] = ((i >= 0 ? av1[i--] : '0') +
+		(j >= 0 ? av2[j--] : '0') + (rem ? rem-- : 0) - '0')) > '9')
+		{
+			rem = 1;
+			buf[len + 1] -= 10;
+		}
+	return (buf);
 }
 
 char	*mult_by_one_digit(char *buf, char *av1, char *av2, int k[])
@@ -48,8 +69,15 @@ char	*mult_by_one_digit(char *buf, char *av1, char *av2, int k[])
 	int		rem;
 	int		fn;
 	int		j;
+	int		nulls;
 
-	help_for_mbod(&buf, &len, k);
+	nulls = k[5]++;
+	len = k[0] - k[3] + nulls + 3;
+	buf = (char *)malloc(sizeof(char) * len);
+	buf[len--] = '\0';
+	buf[len--] = '\0';
+	while (nulls--)
+		buf[len--] = '0';
 	j = k[0];
 	rem = 0;
 	while (len >= 0)
@@ -71,14 +99,19 @@ char	*mult_by_one_digit(char *buf, char *av1, char *av2, int k[])
 int		infin_mult(char *cop, char *av1, char *av2, int k[])
 {
 	char	*bbb;
+	char	*bbb_buf;
 
 	bbb = mult_by_one_digit(NULL, av1, av2, k);
 	k[1]--;
+	__builtin_printf("bbb is : %p\n", bbb);
 	while (k[1] >= k[4])
 	{
 		cop = mult_by_one_digit(NULL, av1, av2, k);
-		bbb = adding(NULL, bbb, cop, k);
+		bbb_buf = bbb;
+		bbb = infin_add(NULL, bbb, cop, k);
 		free(cop);
+		__builtin_printf("bbb is : %p\n", bbb);
+		free(bbb_buf);
 		k[1]--;
 	}
 	return (printarr(bbb, k[2]));
